@@ -113,10 +113,15 @@ public class WebDashboard {
 
 	/**
 	 * Subscribes a listener to be notified of any change in the table
-	 * @param recordListener the RecordListener to notify of changes
+	 * @param recordListener the RecordListener to notify (with the entire table) of changes
 	 */
-	public static void subscribeRecord(RecordListener recordListener) {
-		rec.subscribe((RecordChangedCallback) recordListener); // ewww
+	public static void subscribeRecord(final RecordListener recordListener) {
+		rec.subscribe(new RecordChangedCallback() {
+			@Override
+			public void onRecordChanged(String s, JsonElement jsonElement) {
+				recordListener.recordChanged("", jsonElement);
+			}
+		});
 	}
 
 	// Events
