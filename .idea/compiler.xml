@@ -2,8 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="webdashboard_main" target="1.5" />
-      <module name="webdashboard_test" target="1.5" />
+      <module name="webdashboard_main" target="1.7" />
+      <module name="webdashboard_test" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
