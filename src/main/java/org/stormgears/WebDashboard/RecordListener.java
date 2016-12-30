@@ -1,6 +1,5 @@
 package org.stormgears.WebDashboard;
 
-import com.google.gson.JsonElement;
 import io.deepstream.RecordPathChangedCallback;
 
 /**
