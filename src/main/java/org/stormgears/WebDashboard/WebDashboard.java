@@ -1,10 +1,8 @@
 package org.stormgears.WebDashboard;
 
 import com.google.gson.Gson;
-import io.deepstream.DeepstreamClient;
-import io.deepstream.LoginResult;
-import io.deepstream.Record;
-import io.deepstream.RecordChangedCallback;
+import com.google.gson.JsonElement;
+import io.deepstream.*;
 
 import java.lang.reflect.Type;
 import java.net.URISyntaxException;
@@ -104,8 +102,13 @@ public class WebDashboard {
 	 * @param path the JSON path to subscribe to
 	 * @param recordListener the RecordListener to notify of changes
 	 */
-	public static void subscribeRecord(String path, RecordListener recordListener) {
-		rec.subscribe(path, recordListener);
+	public static void subscribeRecord(String path, final RecordListener recordListener) {
+		rec.subscribe(path, new RecordPathChangedCallback() {
+			@Override
+			public void onRecordPathChanged(String s, String path, JsonElement jsonElement) {
+				recordListener.recordChanged(path, jsonElement);
+			}
+		});
 	}
 
 	/**

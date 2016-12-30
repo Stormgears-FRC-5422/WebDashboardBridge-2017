@@ -1,8 +1,10 @@
 package org.stormgears.WebDashboard;
 
-import io.deepstream.RecordPathChangedCallback;
+import com.google.gson.JsonElement;
 
 /**
  * Created by andrew on 12/29/16.
  */
-public interface RecordListener extends RecordPathChangedCallback {}
+public interface RecordListener {
+	public void recordChanged(String path, JsonElement data);
+}
