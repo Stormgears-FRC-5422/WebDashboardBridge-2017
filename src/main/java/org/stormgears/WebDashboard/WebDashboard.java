@@ -2,6 +2,7 @@ package org.stormgears.WebDashboard;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import io.deepstream.*;
 
 import java.lang.reflect.Type;
@@ -22,7 +23,7 @@ public class WebDashboard {
 	 */
 	public static void init(String server) throws URISyntaxException {
 		client = new DeepstreamClient(server);
-		LoginResult result = client.login();
+		LoginResult result = client.login(new JsonObject());
 		if (result.loggedIn()) {
 			System.out.println("Logged in!");
 			rec = client.record.getRecord("webdashboard");
