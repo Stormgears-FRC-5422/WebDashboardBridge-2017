@@ -25,4 +25,47 @@ public class Text extends GameControl {
 	public Text(String label, String path) {
 		super(label, path);
 	}
+
+	public static class Builder {
+		private String label;
+		private String path;
+		private byte width = 12;
+		private boolean large = false;
+		private boolean enabled = true;
+		private boolean numbersOnly = false;
+
+		public Builder setLabel(String label) {
+			this.label = label;
+			return this;
+		}
+
+		public Builder setPath(String path) {
+			this.path = path;
+			return this;
+		}
+
+		public Builder setWidth(byte width) {
+			this.width = width;
+			return this;
+		}
+
+		public Builder setLarge(boolean large) {
+			this.large = large;
+			return this;
+		}
+
+		public Builder setEnabled(boolean enabled) {
+			this.enabled = enabled;
+			return this;
+		}
+
+		public Builder setNumbersOnly(boolean numbersOnly) {
+			this.numbersOnly = numbersOnly;
+			return this;
+		}
+
+		public Text createText() {
+			return new Text(label, path, width, large, enabled, numbersOnly);
+		}
+	}
 }
