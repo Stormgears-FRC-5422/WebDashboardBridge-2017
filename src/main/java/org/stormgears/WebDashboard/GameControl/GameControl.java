@@ -1,7 +1,8 @@
 package org.stormgears.WebDashboard.GameControl;
 
 /**
- * Abstract class with fields for most game controls.
+ * Abstract class with fields for most game controls. An array of GameControls can be added to the dashboard using
+ * <code>WebDashboard.set("config.controls", new GameControl[]{...});</code>
  *
  * @author Andrew Sun
  */
