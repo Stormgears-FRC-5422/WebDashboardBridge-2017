@@ -13,5 +13,6 @@ public enum ControlType {
 	TEXTAREA,
 	SELECT,
 	PROGRESS,
-	SLIDER
+	SLIDER,
+	SPACER
 }
