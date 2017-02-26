@@ -23,7 +23,11 @@ public class WebDashboard {
 	 */
 	public static void init(String server) throws URISyntaxException {
 		client = new DeepstreamClient(server);
-		LoginResult result = client.login(new JsonObject());
+
+		JsonObject loginData = new JsonObject();
+		loginData.addProperty("username", "robot");
+		LoginResult result = client.login(loginData);
+
 		if (result.loggedIn()) {
 			System.out.println("Logged in!");
 			rec = client.record.getRecord("webdashboard");

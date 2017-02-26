@@ -7,7 +7,7 @@ import org.stormgears.WebDashboard.WebDashboard;
  */
 public class WebDashboardTester {
 	public static void main(String[] args) throws Exception {
-		WebDashboard.init("10.54.22.22:5802");
+		WebDashboard.init("localhost:5802");
 		System.out.println(WebDashboard.getDouble("motor"));
 		WebDashboard.subscribeRecord("motor", new RecordListener() {
 			@Override
