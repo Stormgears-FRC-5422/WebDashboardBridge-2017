@@ -19,7 +19,7 @@ public class WebDashboard {
 	/**
 	 * Initializes the WebDashboard class, connecting to the specified server
 	 * @param server the server to connect to (i.e. Raspberry Pi)
-	 * @throws URISyntaxException
+	 * @throws URISyntaxException If the given server URI is invalid
 	 */
 	public static void init(String server) throws URISyntaxException {
 		client = new DeepstreamClient(server);

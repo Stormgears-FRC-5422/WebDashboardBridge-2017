@@ -1,7 +1,7 @@
 package org.stormgears.WebDashboard.GameControl;
 
 /**
- * Created by andrew on 2/24/17.
+ * Enum for the types of toggles, default (checkbox or radio), or a switch.
  */
 public enum ToggleType {
 	DEFAULT,

@@ -1,12 +1,26 @@
 package org.stormgears.WebDashboard.GameControl;
 
 /**
- * Created by andrew on 2/24/17.
+ * Creates radio buttons on the dashboard.
  */
 public class Radios extends GameControl {
+	/**
+	 * Represents a single radio button.
+	 */
 	public static class Radio {
+		/**
+		 * The underlying value used by the software.
+		 */
 		public final String value;
+
+		/**
+		 * The label displayed next to the radio button.
+		 */
 		public final String label;
+
+		/**
+		 * Whether this single radio button is enabled.
+		 */
 		public boolean enabled = true;
 
 		public Radio(String value, String label) {
@@ -21,7 +35,14 @@ public class Radios extends GameControl {
 		}
 	}
 
+	/**
+	 * A list of radio buttons to display as options.
+	 */
 	public final Radios[] entries;
+
+	/**
+	 * Specifies the style of toggles.
+	 */
 	public ToggleType toggleType = ToggleType.DEFAULT;
 
 	public final ControlType type = ControlType.RADIOS;
@@ -48,6 +69,9 @@ public class Radios extends GameControl {
 		this.toggleType = toggleType;
 	}
 
+	/**
+	 * Builder class to assist in the construction of a Radios object
+	 */
 	public static class Builder {
 		private String label;
 		private String path;
@@ -93,7 +117,7 @@ public class Radios extends GameControl {
 		}
 
 		public Radios createRadios() {
-			return new Radios(label, path, width, large, enabled, entries);
+			return new Radios(label, path, width, large, enabled, entries, toggleType);
 		}
 	}
 }

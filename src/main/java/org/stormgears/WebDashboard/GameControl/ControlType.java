@@ -1,12 +1,11 @@
 package org.stormgears.WebDashboard.GameControl;
 
 /**
- * Created by andrew on 2/24/17.
+ * Enum for each type of control.
  */
 public enum ControlType {
 	DEFAULT,
 	TEXT,
-	BUTTON,
 	CHECKBOXES,
 	RADIOS,
 	TEXTFIELD,

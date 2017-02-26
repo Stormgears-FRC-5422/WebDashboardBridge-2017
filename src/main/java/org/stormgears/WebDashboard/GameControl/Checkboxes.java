@@ -1,9 +1,31 @@
 package org.stormgears.WebDashboard.GameControl;
 
 /**
- * Created by andrew on 2/24/17.
+ * Creates a group of checkboxes on the dashboard. The checkboxes control a JSON object.
+ * <p>
+ * For example, if a Checkbox object is bound to the path "checkboxes" and contains the following Checkboxes:
+ * <blockquote><pre>
+ * {
+ *     new Checkbox("a", "Label A"),
+ *     new Checkbox("b", "Label B")
+ * }
+ * </pre></blockquote>
+ * the code
+ * <blockquote><pre>
+ * WebDashboard.set("checkboxes.a", false);
+ * WebDashboard.set("checkboxes.b", true);
+ * </pre></blockquote>
+ * will cause the first checkbox to be unchecked and the second checkbox to be checked. If the following code is run
+ * instead:
+ * <blockquote><pre>
+ * WebDashboard.set("checkboxes", true);
+ * </pre></blockquote>
+ * then <i>all</i> of the checkboxes will be checked. This is useful if there is only one checkbox.
  */
 public class Checkboxes extends GameControl {
+	/**
+	 * Represents a single checkbox on the dashboard.
+	 */
 	public static class Checkbox {
 		public final String value;
 		public final String label;
@@ -21,7 +43,14 @@ public class Checkboxes extends GameControl {
 		}
 	}
 
+	/**
+	 * A list of checkboxes to display.
+	 */
 	public final Checkbox[] entries;
+
+	/**
+	 * Specifies the type of toggles
+	 */
 	public ToggleType toggleType = ToggleType.DEFAULT;
 
 	public final ControlType type = ControlType.CHECKBOXES;
@@ -48,6 +77,9 @@ public class Checkboxes extends GameControl {
 		this.toggleType = toggleType;
 	}
 
+	/**
+	 * Builder class to ease the construction of a Checkboxes object.
+	 */
 	public static class Builder {
 		private String label;
 		private String path;

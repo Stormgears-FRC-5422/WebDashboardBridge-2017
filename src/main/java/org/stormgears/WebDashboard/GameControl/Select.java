@@ -1,10 +1,16 @@
 package org.stormgears.WebDashboard.GameControl;
 
 /**
- * Created by andrew on 2/24/17.
+ * Creates a dropdown menu on the dashboard.
  */
 public class Select extends GameControl {
+	/**
+	 * Represents a single choice in the dropdown menu.
+	 */
 	public static class Option {
+		/**
+		 *
+		 */
 		public final String label;
 		public final String value;
 

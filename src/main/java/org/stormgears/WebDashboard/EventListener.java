@@ -1,7 +1,7 @@
 package org.stormgears.WebDashboard;
 
 /**
- * Created by andrew on 12/29/16.
+ * Wrapper around a Deepstream event listener.
  */
 public interface EventListener extends io.deepstream.EventListener {
 }

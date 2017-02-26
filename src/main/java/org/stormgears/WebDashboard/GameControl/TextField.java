@@ -1,10 +1,14 @@
 package org.stormgears.WebDashboard.GameControl;
 
 /**
- * Created by andrew on 2/24/17.
+ * Creates a single-line text box on the dashboard.
  */
 public class TextField extends GameControl {
+	/**
+	 * Whether the text box should be limited to numerical input.
+	 */
 	public boolean numbersOnly = false;
+
 	public final ControlType type = ControlType.TEXTFIELD;
 
 	public TextField(String label, String path, byte width, boolean large, boolean enabled) {
@@ -25,6 +29,9 @@ public class TextField extends GameControl {
 		this.numbersOnly = numbersOnly;
 	}
 
+	/**
+	 * Builder class to assist in the construction of a TextField object
+	 */
 	public static class Builder {
 		private String label;
 		private String path;
@@ -64,7 +71,7 @@ public class TextField extends GameControl {
 		}
 
 		public TextField createTextField() {
-			return new TextField(label, path, width, large, enabled);
+			return new TextField(label, path, width, large, enabled, numbersOnly);
 		}
 	}
 }

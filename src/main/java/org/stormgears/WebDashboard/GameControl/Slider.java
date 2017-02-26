@@ -1,12 +1,27 @@
 package org.stormgears.WebDashboard.GameControl;
 
 /**
- * Created by andrew on 2/24/17.
+ * Creates a slider control in the dashboard. Displays and controls a numerical value.
  */
 public class Slider extends GameControl {
+	/**
+	 * The minimum value of the slider
+	 */
 	public int min = 0;
+
+	/**
+	 * The maximum value of the slider.
+	 */
 	public int max = 10;
+
+	/**
+	 * The size of the slider movement steps.
+	 */
 	public int stepSize = 1; // FIXME: https://github.com/palantir/blueprint/issues/725
+
+	/**
+	 * The frequency of the labels on the slider
+	 */
 	public int labelStepSize = 1;
 
 	public final ControlType type = ControlType.SLIDER;
@@ -35,6 +50,9 @@ public class Slider extends GameControl {
 		super(label, path);
 	}
 
+	/**
+	 * Builder class to assist the construction of a Slider object.
+	 */
 	public static class Builder {
 		private String label;
 		private String path;

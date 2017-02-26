@@ -1,7 +1,7 @@
 package org.stormgears.WebDashboard.GameControl;
 
 /**
- * Created by andrew on 2/24/17.
+ * Creates a multi-line text area on the dashboard.
  */
 public class TextArea extends GameControl {
 	public final ControlType type = ControlType.TEXTAREA;
@@ -14,6 +14,9 @@ public class TextArea extends GameControl {
 		super(label, path);
 	}
 
+	/**
+	 * Builder class to assist in the construction of a TextArea.
+	 */
 	public static class Builder {
 		private String label;
 		private String path;

@@ -1,9 +1,12 @@
 package org.stormgears.WebDashboard.GameControl;
 
 /**
- * Created by andrew on 2/24/17.
+ * Displays a piece of text on the dashboard. This text may or may not be editable.
  */
 public class Text extends GameControl {
+	/**
+	 * Whether the text field should be restricted to number input.
+	 */
 	public boolean numbersOnly = false;
 
 	public final ControlType type = ControlType.TEXT;
@@ -26,6 +29,9 @@ public class Text extends GameControl {
 		super(label, path);
 	}
 
+	/**
+	 * Builder class to assist in the construction of a Text object.
+	 */
 	public static class Builder {
 		private String label;
 		private String path;
