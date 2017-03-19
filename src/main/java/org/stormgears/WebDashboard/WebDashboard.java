@@ -7,6 +7,7 @@ import io.deepstream.*;
 
 import java.lang.reflect.Type;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 
 /**
  * Wraps the deepstream library to simplify use with the WebDashboard
@@ -31,6 +32,7 @@ public class WebDashboard {
 		if (result.loggedIn()) {
 			System.out.println("Logged in!");
 			rec = client.record.getRecord("webdashboard");
+
 		} else {
 			throw new Error("Oh noes!"); // TODO: properly handle?
 		}
@@ -51,6 +53,18 @@ public class WebDashboard {
 
 	/**
 	 * Gets a value at the specified path
+	 * @param record the sub-record to get from
+	 * @param path the JSON path to the value
+	 * @param classOfT the class to deserialize the value to, such as int.class
+	 * @param <T> the class type to return
+	 * @return the requested value
+	 */
+	public static <T> T get(String record, String path, Class<T> classOfT) {
+		return gson.fromJson(client.record.getRecord("webdashboard/" + record).get(path), classOfT);
+	}
+
+	/**
+	 * Gets a value at the specified path
 	 * @param path the JSON path to the value
 	 * @param typeOfT the type to deserialize the value to
 	 * @param <T> the type to return
@@ -58,6 +72,18 @@ public class WebDashboard {
 	 */
 	public static <T> T get(String path, Type typeOfT) {
 		return gson.fromJson(rec.get(path), typeOfT);
+	}
+
+	/**
+	 * Gets a value at the specified path
+	 * @param record the sub-record to get from
+	 * @param path the JSON path to the value
+	 * @param typeOfT the type to deserialize the value to
+	 * @param <T> the type to return
+	 * @return the requested value
+	 */
+	public static <T> T get(String record, String path, Type typeOfT) {
+		return gson.fromJson(client.record.getRecord("webdashboard/" + record).get(path), typeOfT);
 	}
 
 	// Shorthand methods
@@ -72,12 +98,32 @@ public class WebDashboard {
 	}
 
 	/**
+	 * Shorthand to get an integer from the dashboard
+	 * @param record the sub-record to get from
+	 * @param path the JSON path to the integer
+	 * @return the integer in the table
+	 */
+	public static int getInt(String record, String path) {
+		return client.record.getRecord("webdashboard/" + record).get(path).getAsInt();
+	}
+
+	/**
 	 * Gets a double from the dashboard
 	 * @param path the JSON path to the double
 	 * @return the double in the table
 	 */
 	public static double getDouble(String path) {
 		return rec.get(path).getAsDouble();
+	}
+
+	/**
+	 * Gets a double from the dashboard
+	 * @param record the sub-record to get from
+	 * @param path the JSON path to the double
+	 * @return the double in the table
+	 */
+	public static double getDouble(String record, String path) {
+		return client.record.getRecord("webdashboard/" + record).get(path).getAsDouble();
 	}
 
 	/**
@@ -89,6 +135,16 @@ public class WebDashboard {
 		return rec.get(path).getAsString();
 	}
 
+	/**
+	 * Gets a string from the dashboard
+	 * @param record the sub-record to get from
+	 * @param path the JSON path to the string
+	 * @return the string in the table
+	 */
+	public static String getString(String record, String path) {
+		return client.record.getRecord("webdashboard/" + record).get(path).getAsString();
+	}
+
 	// Setting records
 
 	/**
@@ -98,6 +154,16 @@ public class WebDashboard {
 	 */
 	public static void set(String path, Object value) {
 		rec.set(path, value);
+	}
+
+	/**
+	 * Sets a value in the dashboard
+	 * @param record the sub-record to set
+	 * @param path the JSON path of the value
+	 * @param value the value to set
+	 */
+	public static void set(String record, String path, Object value) {
+		client.record.getRecord("webdashboard/" + record).set(path, value);
 	}
 
 	// Record listeners
@@ -117,6 +183,22 @@ public class WebDashboard {
 	}
 
 	/**
+	 * Subscribes a RecordListener to be notified of changes in the table in a certain path
+	 * @param record the sub-record to listen to
+	 * @param path the JSON path to subscribe to
+	 * @param recordListener the RecordListener to notify of changes
+	 */
+	public static void subscribeRecord(String record, String path, final RecordListener recordListener) {
+		client.record.getRecord("webdashboard/" + record).subscribe(path, new RecordPathChangedCallback() {
+			@Override
+			public void onRecordPathChanged(String s, String path, JsonElement jsonElement) {
+				recordListener.recordChanged(path, jsonElement);
+			}
+		});
+	}
+
+
+	/**
 	 * Subscribes a listener to be notified of any change in the table
 	 * @param recordListener the RecordListener to notify (with the entire table) of changes
 	 */
@@ -128,6 +210,7 @@ public class WebDashboard {
 			}
 		});
 	}
+
 
 	// Events
 
