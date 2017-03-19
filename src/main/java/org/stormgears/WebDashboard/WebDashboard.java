@@ -7,7 +7,6 @@ import io.deepstream.*;
 
 import java.lang.reflect.Type;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 
 /**
  * Wraps the deepstream library to simplify use with the WebDashboard
