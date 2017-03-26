@@ -9,9 +9,7 @@ public class TextField extends GameControl {
 	 */
 	public boolean numbersOnly = false;
 
-	public final ControlType type = ControlType.TEXTFIELD;
-
-	public TextField(String label, String path, byte width, boolean large, boolean enabled) {
+	public TextField(String label, String path, int width, boolean large, boolean enabled) {
 		super(label, path, width, large, enabled);
 	}
 
@@ -19,7 +17,7 @@ public class TextField extends GameControl {
 		super(label, path);
 	}
 
-	public TextField(String label, String path, byte width, boolean large, boolean enabled, boolean numbersOnly) {
+	public TextField(String label, String path, int width, boolean large, boolean enabled, boolean numbersOnly) {
 		super(label, path, width, large, enabled);
 		this.numbersOnly = numbersOnly;
 	}
@@ -29,13 +27,18 @@ public class TextField extends GameControl {
 		this.numbersOnly = numbersOnly;
 	}
 
+	@Override
+	public ControlType getControlType() {
+		return ControlType.TEXTFIELD;
+	}
+
 	/**
 	 * Builder class to assist in the construction of a TextField object
 	 */
 	public static class Builder {
 		private String label;
 		private String path;
-		private byte width = 12;
+		private int width = 12;
 		private boolean large = false;
 		private boolean enabled = true;
 		private boolean numbersOnly = false;
@@ -50,7 +53,7 @@ public class TextField extends GameControl {
 			return this;
 		}
 
-		public Builder setWidth(byte width) {
+		public Builder setWidth(int width) {
 			this.width = width;
 			return this;
 		}

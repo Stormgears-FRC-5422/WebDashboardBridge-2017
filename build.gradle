@@ -19,5 +19,6 @@ dependencies {
 task fatJar(type: Jar) {
     baseName = project.name + '-all'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    from sourceSets.main.allSource
     with jar
 }

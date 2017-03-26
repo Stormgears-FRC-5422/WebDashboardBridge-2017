@@ -38,35 +38,38 @@ public class Radios extends GameControl {
 	/**
 	 * A list of radio buttons to display as options.
 	 */
-	public final Radios[] entries;
+	public final Radio[] entries;
 
 	/**
 	 * Specifies the style of toggles.
 	 */
 	public ToggleType toggleType = ToggleType.DEFAULT;
 
-	public final ControlType type = ControlType.RADIOS;
-
-	public Radios(String label, String path, byte width, boolean large, boolean enabled, Radios[] entries) {
+	public Radios(String label, String path, int width, boolean large, boolean enabled, Radio[] entries) {
 		super(label, path, width, large, enabled);
 		this.entries = entries;
 	}
 
-	public Radios(String label, String path, Radios[] entries) {
+	public Radios(String label, String path, Radio[] entries) {
 		super(label, path);
 		this.entries = entries;
 	}
 
-	public Radios(String label, String path, byte width, boolean large, boolean enabled, Radios[] entries, ToggleType toggleType) {
+	public Radios(String label, String path, int width, boolean large, boolean enabled, Radio[] entries, ToggleType toggleType) {
 		super(label, path, width, large, enabled);
 		this.entries = entries;
 		this.toggleType = toggleType;
 	}
 
-	public Radios(String label, String path, Radios[] entries, ToggleType toggleType) {
+	public Radios(String label, String path, Radio[] entries, ToggleType toggleType) {
 		super(label, path);
 		this.entries = entries;
 		this.toggleType = toggleType;
+	}
+
+	@Override
+	public ControlType getControlType() {
+		return ControlType.RADIOS;
 	}
 
 	/**
@@ -75,10 +78,10 @@ public class Radios extends GameControl {
 	public static class Builder {
 		private String label;
 		private String path;
-		private byte width = 12;
+		private int width = 12;
 		private boolean large = false;
 		private boolean enabled = true;
-		private Radios[] entries;
+		private Radio[] entries;
 		private ToggleType toggleType = ToggleType.DEFAULT;
 
 		public Builder setLabel(String label) {
@@ -91,7 +94,7 @@ public class Radios extends GameControl {
 			return this;
 		}
 
-		public Builder setWidth(byte width) {
+		public Builder setWidth(int width) {
 			this.width = width;
 			return this;
 		}
@@ -106,7 +109,7 @@ public class Radios extends GameControl {
 			return this;
 		}
 
-		public Builder setEntries(Radios[] entries) {
+		public Builder setEntries(Radio[] entries) {
 			this.entries = entries;
 			return this;
 		}

@@ -27,7 +27,7 @@ public abstract class GameControl {
 	 *     line.
 	 * </p>
 	 */
-	public byte width = 12;
+	public int width = 12;
 
 	/**
 	 * Specifies whether the control is displayed with large text.
@@ -39,9 +39,9 @@ public abstract class GameControl {
 	 */
 	public boolean enabled = true;
 
-	public final ControlType type = ControlType.DEFAULT;
+	public final ControlType type = getControlType();
 
-	public GameControl(String label, String path, byte width, boolean large, boolean enabled) {
+	public GameControl(String label, String path, int width, boolean large, boolean enabled) {
 		this.label = label;
 		this.path = path;
 		this.width = width;
@@ -53,4 +53,6 @@ public abstract class GameControl {
 		this.label = label;
 		this.path = path;
 	}
+
+	public abstract ControlType getControlType();
 }

@@ -8,9 +8,6 @@ public class Select extends GameControl {
 	 * Represents a single choice in the dropdown menu.
 	 */
 	public static class Option {
-		/**
-		 *
-		 */
 		public final String label;
 		public final String value;
 
@@ -22,9 +19,7 @@ public class Select extends GameControl {
 
 	public final Option[] options;
 
-	public final ControlType type = ControlType.SELECT;
-
-	public Select(String label, String path, byte width, boolean large, boolean enabled, Option[] options) {
+	public Select(String label, String path, int width, boolean large, boolean enabled, Option[] options) {
 		super(label, path, width, large, enabled);
 		this.options = options;
 	}
@@ -34,10 +29,15 @@ public class Select extends GameControl {
 		this.options = options;
 	}
 
+	@Override
+	public ControlType getControlType() {
+		return ControlType.SELECT;
+	}
+
 	public class Builder {
 		private String label;
 		private String path;
-		private byte width = 12;
+		private int width = 12;
 		private boolean large = false;
 		private boolean enabled = true;
 		private Select.Option[] options;
@@ -52,7 +52,7 @@ public class Select extends GameControl {
 			return this;
 		}
 
-		public Builder setWidth(byte width) {
+		public Builder setWidth(int width) {
 			this.width = width;
 			return this;
 		}

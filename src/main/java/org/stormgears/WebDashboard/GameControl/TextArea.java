@@ -4,14 +4,17 @@ package org.stormgears.WebDashboard.GameControl;
  * Creates a multi-line text area on the dashboard.
  */
 public class TextArea extends GameControl {
-	public final ControlType type = ControlType.TEXTAREA;
-
-	public TextArea(String label, String path, byte width, boolean large, boolean enabled) {
+	public TextArea(String label, String path, int width, boolean large, boolean enabled) {
 		super(label, path, width, large, enabled);
 	}
 
 	public TextArea(String label, String path) {
 		super(label, path);
+	}
+
+	@Override
+	public ControlType getControlType() {
+		return ControlType.TEXTAREA;
 	}
 
 	/**
@@ -20,7 +23,7 @@ public class TextArea extends GameControl {
 	public static class Builder {
 		private String label;
 		private String path;
-		private byte width = 12;
+		private int width = 12;
 		private boolean large = false;
 		private boolean enabled = true;
 
@@ -34,7 +37,7 @@ public class TextArea extends GameControl {
 			return this;
 		}
 
-		public Builder setWidth(byte width) {
+		public Builder setWidth(int width) {
 			this.width = width;
 			return this;
 		}

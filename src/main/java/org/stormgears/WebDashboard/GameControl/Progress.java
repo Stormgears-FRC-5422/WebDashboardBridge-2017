@@ -29,9 +29,26 @@ public class Progress extends GameControl {
 	 */
 	public Type progressType = Type.BAR;
 
-	public ControlType type = ControlType.PROGRESS;
+	/**
+	 * Specifies the color of the progress bar
+	 */
+	public Intent intent = Intent.NONE;
 
-	public Progress(String label, String path, byte width, boolean large) {
+	public Progress(String label, String path, int width, boolean large, boolean enabled, boolean stripes, Type progressType, Intent intent) {
+		super(label, path, width, large, enabled);
+		this.stripes = stripes;
+		this.progressType = progressType;
+		this.intent = intent;
+	}
+
+	public Progress(String label, String path, boolean stripes, Type progressType, Intent intent) {
+		super(label, path);
+		this.stripes = stripes;
+		this.progressType = progressType;
+		this.intent = intent;
+	}
+
+	public Progress(String label, String path, int width, boolean large) {
 		super(label, path, width, large, true);
 	}
 
@@ -39,7 +56,7 @@ public class Progress extends GameControl {
 		super(label, path);
 	}
 
-	public Progress(String label, String path, byte width, boolean large, boolean stripes, Type progressType) {
+	public Progress(String label, String path, int width, boolean large, boolean stripes, Type progressType) {
 		super(label, path, width, large, true);
 		this.stripes = stripes;
 		this.progressType = progressType;
@@ -57,10 +74,12 @@ public class Progress extends GameControl {
 	public static class Builder {
 		private String label;
 		private String path;
-		private byte width = 12;
+		private int width = 12;
 		private boolean large = false;
+		private boolean enabled = true;
 		private boolean stripes = true;
 		private Type progressType = Type.BAR;
+		private Intent intent = Intent.NONE;
 
 		public Builder setLabel(String label) {
 			this.label = label;
@@ -72,13 +91,18 @@ public class Progress extends GameControl {
 			return this;
 		}
 
-		public Builder setWidth(byte width) {
+		public Builder setWidth(int width) {
 			this.width = width;
 			return this;
 		}
 
 		public Builder setLarge(boolean large) {
 			this.large = large;
+			return this;
+		}
+
+		public Builder setEnabled(boolean enabled) {
+			this.enabled = enabled;
 			return this;
 		}
 
@@ -92,8 +116,18 @@ public class Progress extends GameControl {
 			return this;
 		}
 
-		public Progress createProgress() {
-			return new Progress(label, path, width, large, stripes, progressType);
+		public Builder setIntent(Intent intent) {
+			this.intent = intent;
+			return this;
 		}
+
+		public Progress createProgress() {
+			return new Progress(label, path, width, large, enabled, stripes, progressType, intent);
+		}
+	}
+
+	@Override
+	public ControlType getControlType() {
+		return ControlType.PROGRESS;
 	}
 }

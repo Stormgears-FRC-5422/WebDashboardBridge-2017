@@ -9,9 +9,7 @@ public class Text extends GameControl {
 	 */
 	public boolean numbersOnly = false;
 
-	public final ControlType type = ControlType.TEXT;
-
-	public Text(String label, String path, byte width, boolean large, boolean enabled, boolean numbersOnly) {
+	public Text(String label, String path, int width, boolean large, boolean enabled, boolean numbersOnly) {
 		super(label, path, width, large, enabled);
 		this.numbersOnly = numbersOnly;
 	}
@@ -21,12 +19,17 @@ public class Text extends GameControl {
 		this.numbersOnly = numbersOnly;
 	}
 
-	public Text(String label, String path, byte width, boolean large, boolean enabled) {
+	public Text(String label, String path, int width, boolean large, boolean enabled) {
 		super(label, path, width, large, enabled);
 	}
 
 	public Text(String label, String path) {
 		super(label, path);
+	}
+
+	@Override
+	public ControlType getControlType() {
+		return ControlType.TEXT;
 	}
 
 	/**
@@ -35,7 +38,7 @@ public class Text extends GameControl {
 	public static class Builder {
 		private String label;
 		private String path;
-		private byte width = 12;
+		private int width = 12;
 		private boolean large = false;
 		private boolean enabled = true;
 		private boolean numbersOnly = false;
@@ -50,7 +53,7 @@ public class Text extends GameControl {
 			return this;
 		}
 
-		public Builder setWidth(byte width) {
+		public Builder setWidth(int width) {
 			this.width = width;
 			return this;
 		}

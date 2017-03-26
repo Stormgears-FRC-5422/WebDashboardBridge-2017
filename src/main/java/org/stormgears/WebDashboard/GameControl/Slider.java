@@ -7,26 +7,24 @@ public class Slider extends GameControl {
 	/**
 	 * The minimum value of the slider
 	 */
-	public int min = 0;
+	public double min = 0;
 
 	/**
 	 * The maximum value of the slider.
 	 */
-	public int max = 10;
+	public double max = 10;
 
 	/**
 	 * The size of the slider movement steps.
 	 */
-	public int stepSize = 1; // FIXME: https://github.com/palantir/blueprint/issues/725
+	public double stepSize = 1;
 
 	/**
 	 * The frequency of the labels on the slider
 	 */
-	public int labelStepSize = 1;
+	public double labelStepSize = 1;
 
-	public final ControlType type = ControlType.SLIDER;
-
-	public Slider(String label, String path, byte width, boolean large, boolean enabled, int min, int max, int stepSize, int labelStepSize) {
+	public Slider(String label, String path, int width, boolean large, boolean enabled, double min, double max, double stepSize, double labelStepSize) {
 		super(label, path, width, large, enabled);
 		this.min = min;
 		this.max = max;
@@ -34,7 +32,7 @@ public class Slider extends GameControl {
 		this.labelStepSize = labelStepSize;
 	}
 
-	public Slider(String label, String path, int min, int max, int stepSize, int labelStepSize) {
+	public Slider(String label, String path, double min, double max, double stepSize, double labelStepSize) {
 		super(label, path);
 		this.min = min;
 		this.max = max;
@@ -42,12 +40,17 @@ public class Slider extends GameControl {
 		this.labelStepSize = labelStepSize;
 	}
 
-	public Slider(String label, String path, byte width, boolean large, boolean enabled) {
+	public Slider(String label, String path, int width, boolean large, boolean enabled) {
 		super(label, path, width, large, enabled);
 	}
 
 	public Slider(String label, String path) {
 		super(label, path);
+	}
+
+	@Override
+	public ControlType getControlType() {
+		return ControlType.SLIDER;
 	}
 
 	/**
@@ -56,13 +59,13 @@ public class Slider extends GameControl {
 	public static class Builder {
 		private String label;
 		private String path;
-		private byte width = 12;
+		private int width = 12;
 		private boolean large = false;
 		private boolean enabled = true;
-		private int min = 0;
-		private int max = 10;
-		private int stepSize = 1;
-		private int labelStepSize = 1;
+		private double min = 0;
+		private double max = 10;
+		private double stepSize = 1;
+		private double labelStepSize = 1;
 
 		public Builder setLabel(String label) {
 			this.label = label;
@@ -74,7 +77,7 @@ public class Slider extends GameControl {
 			return this;
 		}
 
-		public Builder setWidth(byte width) {
+		public Builder setWidth(int width) {
 			this.width = width;
 			return this;
 		}
@@ -89,22 +92,22 @@ public class Slider extends GameControl {
 			return this;
 		}
 
-		public Builder setMin(int min) {
+		public Builder setMin(double min) {
 			this.min = min;
 			return this;
 		}
 
-		public Builder setMax(int max) {
+		public Builder setMax(double max) {
 			this.max = max;
 			return this;
 		}
 
-		public Builder setStepSize(int stepSize) {
+		public Builder setStepSize(double stepSize) {
 			this.stepSize = stepSize;
 			return this;
 		}
 
-		public Builder setLabelStepSize(int labelStepSize) {
+		public Builder setLabelStepSize(double labelStepSize) {
 			this.labelStepSize = labelStepSize;
 			return this;
 		}

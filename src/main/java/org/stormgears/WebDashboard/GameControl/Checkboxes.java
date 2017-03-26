@@ -53,9 +53,7 @@ public class Checkboxes extends GameControl {
 	 */
 	public ToggleType toggleType = ToggleType.DEFAULT;
 
-	public final ControlType type = ControlType.CHECKBOXES;
-
-	public Checkboxes(String label, String path, byte width, boolean large, boolean enabled, Checkbox[] entries) {
+	public Checkboxes(String label, String path, int width, boolean large, boolean enabled, Checkbox[] entries) {
 		super(label, path, width, large, enabled);
 		this.entries = entries;
 	}
@@ -65,7 +63,7 @@ public class Checkboxes extends GameControl {
 		this.entries = entries;
 	}
 
-	public Checkboxes(String label, String path, byte width, boolean large, boolean enabled, Checkbox[] entries, ToggleType toggleType) {
+	public Checkboxes(String label, String path, int width, boolean large, boolean enabled, Checkbox[] entries, ToggleType toggleType) {
 		super(label, path, width, large, enabled);
 		this.entries = entries;
 		this.toggleType = toggleType;
@@ -77,13 +75,18 @@ public class Checkboxes extends GameControl {
 		this.toggleType = toggleType;
 	}
 
+	@Override
+	public ControlType getControlType() {
+		return ControlType.CHECKBOXES;
+	}
+
 	/**
 	 * Builder class to ease the construction of a Checkboxes object.
 	 */
 	public static class Builder {
 		private String label;
 		private String path;
-		private byte width = 12;
+		private int width = 12;
 		private boolean large = false;
 		private boolean enabled = true;
 		private Checkbox[] entries;
@@ -99,7 +102,7 @@ public class Checkboxes extends GameControl {
 			return this;
 		}
 
-		public Builder setWidth(byte width) {
+		public Builder setWidth(int width) {
 			this.width = width;
 			return this;
 		}
