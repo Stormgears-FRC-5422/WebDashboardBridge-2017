@@ -5,8 +5,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.deepstream.*;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
-import java.net.URISyntaxException;
+import java.net.*;
 
 /**
  * Wraps the deepstream library to simplify use with the WebDashboard
@@ -16,12 +17,33 @@ public class WebDashboard {
 	public static Record rec;
 	public static Gson gson = new Gson();
 
+	private static final String discoPacket = "WEBDASHBOARD_DISCO";
+
 	/**
 	 * Initializes the WebDashboard class, connecting to the specified server
-	 * @param server the server to connect to (i.e. Raspberry Pi)
 	 * @throws URISyntaxException If the given server URI is invalid
 	 */
-	public static void init(String server) throws URISyntaxException {
+	public static void init() throws URISyntaxException, IOException {
+		// Discover the server
+		DatagramSocket datagram = new DatagramSocket(new InetSocketAddress("0.0.0.0", 5802));
+		datagram.setSoTimeout(10000);
+
+		String server = "";
+		while (true) {
+			byte[] buf = new byte[discoPacket.length()];
+			DatagramPacket pack = new DatagramPacket(buf, discoPacket.length());
+
+			datagram.receive(pack);
+
+			String s = new String(pack.getData());
+			if (s.equals(discoPacket)) {
+				String host = pack.getAddress().getHostAddress();
+				System.out.println("Discovered WebDashboard server: " + host);
+				server = host + ":5802";
+				break;
+			}
+		}
+
 		client = new DeepstreamClient(server);
 
 		JsonObject loginData = new JsonObject();

@@ -8,35 +8,45 @@ import org.stormgears.WebDashboard.WebDashboard;
  */
 public class WebDashboardTester {
 	public static void main(String[] args) throws Exception {
-		WebDashboard.init("localhost:5802");
-		System.out.println(WebDashboard.getDouble("motor"));
-		WebDashboard.subscribeRecord("motor", new RecordListener() {
-			@Override
-			public void recordChanged(String path, JsonElement data) {
-				System.out.println(data);
-			}
-		});
+		WebDashboard.init();
+//		System.out.println(WebDashboard.getDouble("motor"));
+//		WebDashboard.subscribeRecord("motor", new RecordListener() {
+//			@Override
+//			public void recordChanged(String path, JsonElement data) {
+//				System.out.println(data);
+//			}
+//		});
 
 
 		WebDashboard.set("config", "game", new GameControl[]{
-				new Slider("Test Slider", "motor", 0, 1, 0.1, 0.1),
 				new Radios.Builder()
-						.setPath("radioTest")
-						.setWidth(6)
-						.setLabel("Test Radio Buttons")
-						.setLarge(true)
-						.setToggleType(ToggleType.SWITCH)
+						.setLabel("Alliance")
+						.setPath("alliance")
+						.setWidth(4)
 						.setEntries(new Radios.Radio[]{
-								new Radios.Radio("meow", "Cat", true),
-								new Radios.Radio("woof", "Dog", true),
-								new Radios.Radio("quack", "Duck", false)
-						}).createRadios(),
-				new Progress.Builder()
-						.setPath("motor")
-						.setLabel("Motor Progress")
-						.setWidth(6)
-						.setIntent(Intent.WARNING)
-						.createProgress()
+								new Radios.Radio("red", "Red"),
+								new Radios.Radio("blue", "Blue")
+						})
+						.createRadios(),
+				new Radios.Builder()
+						.setLabel("Gear Placement")
+						.setPath("gearPlacement")
+						.setWidth(4)
+						.setEntries(new Radios.Radio[]{
+								new Radios.Radio("left", "Place Gear Left"),
+								new Radios.Radio("center", "Place Gear Center"),
+								new Radios.Radio("right", "Place Gear Right")
+						})
+						.createRadios(),
+				new Radios.Builder()
+						.setLabel("Drop-Off Location")
+						.setPath("gearDropOff")
+						.setWidth(4)
+						.setEntries(new Radios.Radio[]{
+								new Radios.Radio("gearPickup", "Drop Off at Gear Pickup"),
+								new Radios.Radio("baseline", "Drop Off at Baseline")
+						})
+						.createRadios()
 		});
 	}
 }
