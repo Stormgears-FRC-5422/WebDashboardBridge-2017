@@ -48,5 +48,6 @@ public class WebDashboardTester {
 						})
 						.createRadios()
 		});
+		System.out.println("meow");
 	}
 }

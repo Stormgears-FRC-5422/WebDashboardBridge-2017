@@ -164,7 +164,11 @@ public class WebDashboard {
 	 * @return the string in the table
 	 */
 	public static String getString(String path) {
-		return rec.get(path).getAsString();
+		JsonElement thing = rec.get(path);
+		if (thing.isJsonNull()) {
+			return null;
+		}
+		return thing.getAsString();
 	}
 
 	/**
@@ -174,7 +178,11 @@ public class WebDashboard {
 	 * @return the string in the table
 	 */
 	public static String getString(String record, String path) {
-		return client.record.getRecord("webdashboard/" + record).get(path).getAsString();
+		JsonElement thing = client.record.getRecord("webdashboard/" + record).get(path);
+		if (thing.isJsonNull()) {
+			return null;
+		}
+		return thing.getAsString();
 	}
 
 	// Setting records
