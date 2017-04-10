@@ -3,7 +3,29 @@ package org.stormgears.WebDashboard.GameControl;
 /**
  * Creates a slider control in the dashboard. Displays and controls a numerical value.
  */
-public class Slider extends GameControl {
+public class Slider implements GameControl {
+	/**
+	 * Text to be displayed near the control.
+	 */
+	public final String label;
+
+	/**
+	 * Specifies what JSON path the control is bound to. The control will display the value of the JSON path in
+	 * WebDashboard's distributed hashtable, and changes made to the control's value will be propagated to the
+	 * hashtable.
+	 */
+	public final String path;
+
+	/**
+	 * The width of the control, ranging from 1 to 12.
+	 */
+	public int width = 12;
+
+	/**
+	 * Specifies whether the user is allowed to make modifications to the control's value.
+	 */
+	public boolean enabled = true;
+
 	/**
 	 * The minimum value of the slider
 	 */
@@ -24,33 +46,22 @@ public class Slider extends GameControl {
 	 */
 	public double labelStepSize = 1;
 
-	public Slider(String label, String path, int width, boolean large, boolean enabled, double min, double max, double stepSize, double labelStepSize) {
-		super(label, path, width, large, enabled);
-		this.min = min;
-		this.max = max;
-		this.stepSize = stepSize;
-		this.labelStepSize = labelStepSize;
-	}
-
-	public Slider(String label, String path, double min, double max, double stepSize, double labelStepSize) {
-		super(label, path);
-		this.min = min;
-		this.max = max;
-		this.stepSize = stepSize;
-		this.labelStepSize = labelStepSize;
-	}
-
-	public Slider(String label, String path, int width, boolean large, boolean enabled) {
-		super(label, path, width, large, enabled);
-	}
+	public final ControlType type = ControlType.SLIDER;
 
 	public Slider(String label, String path) {
-		super(label, path);
+		this.label = label;
+		this.path = path;
 	}
 
-	@Override
-	public ControlType getControlType() {
-		return ControlType.SLIDER;
+	public Slider(String label, String path, int width, boolean enabled, double min, double max, double stepSize, double labelStepSize) {
+		this.label = label;
+		this.path = path;
+		this.width = width;
+		this.enabled = enabled;
+		this.min = min;
+		this.max = max;
+		this.stepSize = stepSize;
+		this.labelStepSize = labelStepSize;
 	}
 
 	/**
@@ -60,7 +71,6 @@ public class Slider extends GameControl {
 		private String label;
 		private String path;
 		private int width = 12;
-		private boolean large = false;
 		private boolean enabled = true;
 		private double min = 0;
 		private double max = 10;
@@ -79,11 +89,6 @@ public class Slider extends GameControl {
 
 		public Builder setWidth(int width) {
 			this.width = width;
-			return this;
-		}
-
-		public Builder setLarge(boolean large) {
-			this.large = large;
 			return this;
 		}
 
@@ -113,7 +118,7 @@ public class Slider extends GameControl {
 		}
 
 		public Slider createSlider() {
-			return new Slider(label, path, width, large, enabled, min, max, stepSize, labelStepSize);
+			return new Slider(label, path, width, enabled, min, max, stepSize, labelStepSize);
 		}
 	}
 }

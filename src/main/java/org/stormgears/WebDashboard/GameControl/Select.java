@@ -3,7 +3,7 @@ package org.stormgears.WebDashboard.GameControl;
 /**
  * Creates a dropdown menu on the dashboard.
  */
-public class Select extends GameControl {
+public class Select implements GameControl {
 	/**
 	 * Represents a single choice in the dropdown menu.
 	 */
@@ -17,29 +17,71 @@ public class Select extends GameControl {
 		}
 	}
 
+	/**
+	 * Text to be displayed near the control.
+	 */
+	public final String label;
+
+	/**
+	 * Specifies what JSON path the control is bound to. The control will display the value of the JSON path in
+	 * WebDashboard's distributed hashtable, and changes made to the control's value will be propagated to the
+	 * hashtable.
+	 */
+	public final String path;
+
+	/**
+	 * The width of the control, ranging from 1 to 12.
+	 */
+	public int width = 12;
+
+	/**
+	 * Specifies whether the control is displayed with large text.
+	 */
+	public boolean large = false;
+
+	/**
+	 * Specifies whether the user is allowed to make modifications to the control's value.
+	 */
+	public boolean enabled = true;
+
+	/**
+	 * Specifies whether the menu should fill the entire width allowed.
+	 */
+	public boolean fill = false;
+
+	/**
+	 * A list of options to display
+	 */
 	public final Option[] options;
 
-	public Select(String label, String path, int width, boolean large, boolean enabled, Option[] options) {
-		super(label, path, width, large, enabled);
-		this.options = options;
-	}
+	public final ControlType type = ControlType.SELECT;
 
 	public Select(String label, String path, Option[] options) {
-		super(label, path);
+		this.label = label;
+		this.path = path;
 		this.options = options;
 	}
 
-	@Override
-	public ControlType getControlType() {
-		return ControlType.SELECT;
+	public Select(String label, String path, int width, boolean large, boolean enabled, boolean fill, Option[] options) {
+		this.label = label;
+		this.path = path;
+		this.width = width;
+		this.large = large;
+		this.enabled = enabled;
+		this.fill = fill;
+		this.options = options;
 	}
 
-	public class Builder {
+	/**
+	 * Builder class to assist in the construction of a Select
+	 */
+	public static class Builder {
 		private String label;
 		private String path;
 		private int width = 12;
 		private boolean large = false;
 		private boolean enabled = true;
+		private boolean fill = false;
 		private Select.Option[] options;
 
 		public Builder setLabel(String label) {
@@ -67,13 +109,18 @@ public class Select extends GameControl {
 			return this;
 		}
 
+		public Builder setFill(boolean fill) {
+			this.fill = fill;
+			return this;
+		}
+
 		public Builder setOptions(Select.Option[] options) {
 			this.options = options;
 			return this;
 		}
 
 		public Select createSelect() {
-			return new Select(label, path, width, large, enabled, options);
+			return new Select(label, path, width, large, enabled, fill, options);
 		}
 	}
 }

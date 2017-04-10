@@ -3,33 +3,54 @@ package org.stormgears.WebDashboard.GameControl;
 /**
  * Creates a single-line text box on the dashboard.
  */
-public class TextField extends GameControl {
+public class TextField implements GameControl {
+	/**
+	 * Text to be displayed near the control.
+	 */
+	public final String label;
+
+	/**
+	 * Specifies what JSON path the control is bound to. The control will display the value of the JSON path in
+	 * WebDashboard's distributed hashtable, and changes made to the control's value will be propagated to the
+	 * hashtable.
+	 */
+	public final String path;
+
+	/**
+	 * The width of the control, ranging from 1 to 12.
+	 */
+	public int width = 12;
+
+	/**
+	 * Specifies whether the control is displayed with large text.
+	 */
+	public boolean large = false;
+
+	/**
+	 * Specifies whether the user is allowed to make modifications to the control's value.
+	 */
+	public boolean enabled = true;
+
+	/**
+	 * Specifies whether the text field fills the entire width allowed.
+	 */
+	public boolean fill = false;
+
 	/**
 	 * Whether the text box should be limited to numerical input.
 	 */
 	public boolean numbersOnly = false;
 
-	public TextField(String label, String path, int width, boolean large, boolean enabled) {
-		super(label, path, width, large, enabled);
-	}
+	public final ControlType type = ControlType.TEXTFIELD;
 
-	public TextField(String label, String path) {
-		super(label, path);
-	}
-
-	public TextField(String label, String path, int width, boolean large, boolean enabled, boolean numbersOnly) {
-		super(label, path, width, large, enabled);
+	public TextField(String label, String path, int width, boolean large, boolean enabled, boolean fill, boolean numbersOnly) {
+		this.label = label;
+		this.path = path;
+		this.width = width;
+		this.large = large;
+		this.enabled = enabled;
+		this.fill = fill;
 		this.numbersOnly = numbersOnly;
-	}
-
-	public TextField(String label, String path, boolean numbersOnly) {
-		super(label, path);
-		this.numbersOnly = numbersOnly;
-	}
-
-	@Override
-	public ControlType getControlType() {
-		return ControlType.TEXTFIELD;
 	}
 
 	/**
@@ -41,6 +62,7 @@ public class TextField extends GameControl {
 		private int width = 12;
 		private boolean large = false;
 		private boolean enabled = true;
+		private boolean fill = false;
 		private boolean numbersOnly = false;
 
 		public Builder setLabel(String label) {
@@ -68,13 +90,18 @@ public class TextField extends GameControl {
 			return this;
 		}
 
+		public Builder setFill(boolean fill) {
+			this.fill = fill;
+			return this;
+		}
+
 		public Builder setNumbersOnly(boolean numbersOnly) {
 			this.numbersOnly = numbersOnly;
 			return this;
 		}
 
 		public TextField createTextField() {
-			return new TextField(label, path, width, large, enabled, numbersOnly);
+			return new TextField(label, path, width, large, enabled, fill, numbersOnly);
 		}
 	}
 }

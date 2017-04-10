@@ -3,33 +3,53 @@ package org.stormgears.WebDashboard.GameControl;
 /**
  * Displays a piece of text on the dashboard. This text may or may not be editable.
  */
-public class Text extends GameControl {
+public class Text implements GameControl {
+	/**
+	 * Text to be displayed near the control.
+	 */
+	public final String label;
+
+	/**
+	 * Specifies what JSON path the control is bound to. The control will display the value of the JSON path in
+	 * WebDashboard's distributed hashtable, and changes made to the control's value will be propagated to the
+	 * hashtable.
+	 */
+	public final String path;
+
+	/**
+	 * The width of the control, ranging from 1 to 12.
+	 */
+	public int width = 12;
+
+	/**
+	 * Specifies whether the control is displayed with large text.
+	 */
+	public boolean large = false;
+
+	/**
+	 * Specifies whether the user is allowed to make modifications to the control's value.
+	 */
+	public boolean editable = false;
+
 	/**
 	 * Whether the text field should be restricted to number input.
 	 */
 	public boolean numbersOnly = false;
 
-	public Text(String label, String path, int width, boolean large, boolean enabled, boolean numbersOnly) {
-		super(label, path, width, large, enabled);
-		this.numbersOnly = numbersOnly;
-	}
-
-	public Text(String label, String path, boolean numbersOnly) {
-		super(label, path);
-		this.numbersOnly = numbersOnly;
-	}
-
-	public Text(String label, String path, int width, boolean large, boolean enabled) {
-		super(label, path, width, large, enabled);
-	}
+	public final ControlType type = ControlType.TEXT;
 
 	public Text(String label, String path) {
-		super(label, path);
+		this.label = label;
+		this.path = path;
 	}
 
-	@Override
-	public ControlType getControlType() {
-		return ControlType.TEXT;
+	public Text(String label, String path, int width, boolean large, boolean editable, boolean numbersOnly) {
+		this.label = label;
+		this.path = path;
+		this.width = width;
+		this.large = large;
+		this.editable = editable;
+		this.numbersOnly = numbersOnly;
 	}
 
 	/**
@@ -40,7 +60,7 @@ public class Text extends GameControl {
 		private String path;
 		private int width = 12;
 		private boolean large = false;
-		private boolean enabled = true;
+		private boolean editable = false;
 		private boolean numbersOnly = false;
 
 		public Builder setLabel(String label) {
@@ -63,8 +83,8 @@ public class Text extends GameControl {
 			return this;
 		}
 
-		public Builder setEnabled(boolean enabled) {
-			this.enabled = enabled;
+		public Builder setEditable(boolean editable) {
+			this.editable = editable;
 			return this;
 		}
 
@@ -74,7 +94,7 @@ public class Text extends GameControl {
 		}
 
 		public Text createText() {
-			return new Text(label, path, width, large, enabled, numbersOnly);
+			return new Text(label, path, width, large, editable, numbersOnly);
 		}
 	}
 }

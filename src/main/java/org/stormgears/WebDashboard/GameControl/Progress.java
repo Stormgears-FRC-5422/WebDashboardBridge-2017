@@ -3,21 +3,23 @@ package org.stormgears.WebDashboard.GameControl;
 /**
  * Creates a progress display in the dashboard. This represents a floating-point value from 0.0 to 1.0.
  */
-public class Progress extends GameControl {
+public class Progress implements GameControl {
 	/**
-	 * Represents the type of progress display.
+	 * Text to be displayed near the control.
 	 */
-	public enum Type {
-		/**
-		 * Changes the display style to a progress bar.
-		 */
-		BAR,
+	public final String label;
 
-		/**
-		 * Changes the display style to a round "spinner."
-		 */
-		SPINNER
-	}
+	/**
+	 * Specifies what JSON path the control is bound to. The control will display the value of the JSON path in
+	 * WebDashboard's distributed hashtable, and changes made to the control's value will be propagated to the
+	 * hashtable.
+	 */
+	public final String path;
+
+	/**
+	 * The width of the control, ranging from 1 to 12.
+	 */
+	public int width = 12;
 
 	/**
 	 * Specifies whether the progress bar should have stripes.
@@ -25,47 +27,29 @@ public class Progress extends GameControl {
 	public boolean stripes = true;
 
 	/**
-	 * Specifies the type of progress display
+	 * Specifies whether the progress bar should be animated.
 	 */
-	public Type progressType = Type.BAR;
+	public boolean animated = false;
 
 	/**
 	 * Specifies the color of the progress bar
 	 */
 	public Intent intent = Intent.NONE;
 
-	public Progress(String label, String path, int width, boolean large, boolean enabled, boolean stripes, Type progressType, Intent intent) {
-		super(label, path, width, large, enabled);
-		this.stripes = stripes;
-		this.progressType = progressType;
-		this.intent = intent;
-	}
-
-	public Progress(String label, String path, boolean stripes, Type progressType, Intent intent) {
-		super(label, path);
-		this.stripes = stripes;
-		this.progressType = progressType;
-		this.intent = intent;
-	}
-
-	public Progress(String label, String path, int width, boolean large) {
-		super(label, path, width, large, true);
-	}
+	public final ControlType type = ControlType.PROGRESS;
 
 	public Progress(String label, String path) {
-		super(label, path);
+		this.label = label;
+		this.path = path;
 	}
 
-	public Progress(String label, String path, int width, boolean large, boolean stripes, Type progressType) {
-		super(label, path, width, large, true);
+	public Progress(String label, String path, int width, boolean stripes, boolean animated, Intent intent) {
+		this.label = label;
+		this.path = path;
+		this.width = width;
 		this.stripes = stripes;
-		this.progressType = progressType;
-	}
-
-	public Progress(String label, String path, boolean stripes, Type progressType) {
-		super(label, path);
-		this.stripes = stripes;
-		this.progressType = progressType;
+		this.animated = animated;
+		this.intent = intent;
 	}
 
 	/**
@@ -75,10 +59,8 @@ public class Progress extends GameControl {
 		private String label;
 		private String path;
 		private int width = 12;
-		private boolean large = false;
-		private boolean enabled = true;
 		private boolean stripes = true;
-		private Type progressType = Type.BAR;
+		private boolean animated = false;
 		private Intent intent = Intent.NONE;
 
 		public Builder setLabel(String label) {
@@ -96,23 +78,13 @@ public class Progress extends GameControl {
 			return this;
 		}
 
-		public Builder setLarge(boolean large) {
-			this.large = large;
-			return this;
-		}
-
-		public Builder setEnabled(boolean enabled) {
-			this.enabled = enabled;
-			return this;
-		}
-
 		public Builder setStripes(boolean stripes) {
 			this.stripes = stripes;
 			return this;
 		}
 
-		public Builder setProgressType(Type progressType) {
-			this.progressType = progressType;
+		public Builder setAnimated(boolean animated) {
+			this.animated = animated;
 			return this;
 		}
 
@@ -122,12 +94,7 @@ public class Progress extends GameControl {
 		}
 
 		public Progress createProgress() {
-			return new Progress(label, path, width, large, enabled, stripes, progressType, intent);
+			return new Progress(label, path, width, stripes, animated, intent);
 		}
-	}
-
-	@Override
-	public ControlType getControlType() {
-		return ControlType.PROGRESS;
 	}
 }

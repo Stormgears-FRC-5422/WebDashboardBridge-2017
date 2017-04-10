@@ -3,7 +3,7 @@ package org.stormgears.WebDashboard.GameControl;
 /**
  * Creates radio buttons on the dashboard.
  */
-public class Radios extends GameControl {
+public class Radios implements GameControl {
 	/**
 	 * Represents a single radio button.
 	 */
@@ -36,6 +36,33 @@ public class Radios extends GameControl {
 	}
 
 	/**
+	 * Text to be displayed near the control.
+	 */
+	public final String label;
+
+	/**
+	 * Specifies what JSON path the control is bound to. The control will display the value of the JSON path in
+	 * WebDashboard's distributed hashtable, and changes made to the control's value will be propagated to the
+	 * hashtable.
+	 */
+	public final String path;
+
+	/**
+	 * The width of the control, ranging from 1 to 12.
+	 */
+	public int width = 12;
+
+	/**
+	 * Specifies whether the control is displayed with large text.
+	 */
+	public boolean large = false;
+
+	/**
+	 * Specifies whether the user is allowed to make modifications to the control's value.
+	 */
+	public boolean enabled = true;
+
+	/**
 	 * A list of radio buttons to display as options.
 	 */
 	public final Radio[] entries;
@@ -45,31 +72,16 @@ public class Radios extends GameControl {
 	 */
 	public ToggleType toggleType = ToggleType.DEFAULT;
 
-	public Radios(String label, String path, int width, boolean large, boolean enabled, Radio[] entries) {
-		super(label, path, width, large, enabled);
-		this.entries = entries;
-	}
-
-	public Radios(String label, String path, Radio[] entries) {
-		super(label, path);
-		this.entries = entries;
-	}
+	public final ControlType type = ControlType.RADIOS;
 
 	public Radios(String label, String path, int width, boolean large, boolean enabled, Radio[] entries, ToggleType toggleType) {
-		super(label, path, width, large, enabled);
+		this.label = label;
+		this.path = path;
+		this.width = width;
+		this.large = large;
+		this.enabled = enabled;
 		this.entries = entries;
 		this.toggleType = toggleType;
-	}
-
-	public Radios(String label, String path, Radio[] entries, ToggleType toggleType) {
-		super(label, path);
-		this.entries = entries;
-		this.toggleType = toggleType;
-	}
-
-	@Override
-	public ControlType getControlType() {
-		return ControlType.RADIOS;
 	}
 
 	/**
@@ -81,7 +93,7 @@ public class Radios extends GameControl {
 		private int width = 12;
 		private boolean large = false;
 		private boolean enabled = true;
-		private Radio[] entries;
+		private Radios.Radio[] entries;
 		private ToggleType toggleType = ToggleType.DEFAULT;
 
 		public Builder setLabel(String label) {
@@ -109,7 +121,7 @@ public class Radios extends GameControl {
 			return this;
 		}
 
-		public Builder setEntries(Radio[] entries) {
+		public Builder setEntries(Radios.Radio[] entries) {
 			this.entries = entries;
 			return this;
 		}
