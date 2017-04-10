@@ -18,6 +18,7 @@ public class WebDashboard {
 	public static Gson gson = new Gson();
 
 	private static final String discoPacket = "WEBDASHBOARD_DISCO";
+	private static final String discoReqPacket = "WEBDASHBOARD_REQUEST";
 
 	/**
 	 * Initializes the WebDashboard class, connecting to the specified server
@@ -25,9 +26,18 @@ public class WebDashboard {
 	 */
 	public static void init() throws URISyntaxException, IOException {
 		// Discover the server
-		DatagramSocket datagram = new DatagramSocket(new InetSocketAddress("0.0.0.0", 5802));
+		DatagramSocket datagram = new DatagramSocket(null);
 		datagram.setSoTimeout(10000);
+		datagram.setReuseAddress(true);
+		datagram.bind(new InetSocketAddress("0.0.0.0", 5802));
 
+		// Unicast request
+		datagram.send(new DatagramPacket(discoReqPacket.getBytes(), discoReqPacket.length(), InetAddress.getByName("10.54.22.5"), 5803));
+
+		// Multicast request
+		datagram.send(new DatagramPacket(discoReqPacket.getBytes(), discoReqPacket.length(), InetAddress.getByName("224.0.0.251"), 5353));
+
+		// Listen for a response
 		String server = "";
 		while (true) {
 			byte[] buf = new byte[discoPacket.length()];
@@ -40,6 +50,8 @@ public class WebDashboard {
 				String host = pack.getAddress().getHostAddress();
 				System.out.println("Discovered WebDashboard server: " + host);
 				server = host + ":5802";
+
+				datagram.close();
 				break;
 			}
 		}
@@ -51,9 +63,8 @@ public class WebDashboard {
 		LoginResult result = client.login(loginData);
 
 		if (result.loggedIn()) {
-			System.out.println("Logged in!");
+			System.out.println("Connected to WebDashboard server");
 			rec = client.record.getRecord("webdashboard");
-
 		} else {
 			throw new Error("Oh noes!"); // TODO: properly handle?
 		}
