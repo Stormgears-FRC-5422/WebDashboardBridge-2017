@@ -34,7 +34,7 @@ public class WebDashboardTester {
 						.setWidth(4)
 						.setEntries(new Radios.Radio[]{
 								new Radios.Radio("left", "Place Gear Left"),
-								new Radios.Radio("center", "Place Gear Center"),
+								new Radios.Radio("center", "Place Gear Center", false),
 								new Radios.Radio("right", "Place Gear Right")
 						})
 						.createRadios(),
@@ -46,7 +46,27 @@ public class WebDashboardTester {
 								new Radios.Radio("gearPickup", "Drop Off at Gear Pickup"),
 								new Radios.Radio("baseline", "Drop Off at Baseline")
 						})
-						.createRadios()
+						.createRadios(),
+				new Select.Builder()
+						.setLabel("Testing select box")
+						.setPath("selectTest")
+						.setLarge(true)
+						.setEnabled(true)
+						.setWidth(6)
+						.setOptions(new Select.Option[]{
+								new Select.Option("MEOW", "cat"),
+								new Select.Option("WOOF", "dog")
+						})
+						.createSelect(),
+				new Checkboxes.Builder()
+						.setLabel("Test checkboxes")
+						.setPath("checkboxTest")
+						.setWidth(6)
+						.setEntries(new Checkboxes.Checkbox[]{
+								new Checkboxes.Checkbox("one", "Option one"),
+								new Checkboxes.Checkbox("two", "Option two")
+						})
+						.createCheckboxes()
 		});
 		System.out.println("meow");
 	}

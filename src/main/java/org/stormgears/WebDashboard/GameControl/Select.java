@@ -45,11 +45,6 @@ public class Select implements GameControl {
 	public boolean enabled = true;
 
 	/**
-	 * Specifies whether the menu should fill the entire width allowed.
-	 */
-	public boolean fill = false;
-
-	/**
 	 * A list of options to display
 	 */
 	public final Option[] options;
@@ -62,13 +57,12 @@ public class Select implements GameControl {
 		this.options = options;
 	}
 
-	public Select(String label, String path, int width, boolean large, boolean enabled, boolean fill, Option[] options) {
+	public Select(String label, String path, int width, boolean large, boolean enabled, Option[] options) {
 		this.label = label;
 		this.path = path;
 		this.width = width;
 		this.large = large;
 		this.enabled = enabled;
-		this.fill = fill;
 		this.options = options;
 	}
 
@@ -81,7 +75,6 @@ public class Select implements GameControl {
 		private int width = 12;
 		private boolean large = false;
 		private boolean enabled = true;
-		private boolean fill = false;
 		private Select.Option[] options;
 
 		public Builder setLabel(String label) {
@@ -109,18 +102,13 @@ public class Select implements GameControl {
 			return this;
 		}
 
-		public Builder setFill(boolean fill) {
-			this.fill = fill;
-			return this;
-		}
-
 		public Builder setOptions(Select.Option[] options) {
 			this.options = options;
 			return this;
 		}
 
 		public Select createSelect() {
-			return new Select(label, path, width, large, enabled, fill, options);
+			return new Select(label, path, width, large, enabled, options);
 		}
 	}
 }

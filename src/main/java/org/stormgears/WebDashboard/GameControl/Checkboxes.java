@@ -98,9 +98,9 @@ public class Checkboxes implements GameControl {
 	public static class Builder {
 		private String label;
 		private String path;
-		private int width;
-		private boolean large;
-		private boolean enabled;
+		private int width = 12;
+		private boolean large = false;
+		private boolean enabled = true;
 		private Checkboxes.Checkbox[] entries;
 
 		public Builder setLabel(String label) {
