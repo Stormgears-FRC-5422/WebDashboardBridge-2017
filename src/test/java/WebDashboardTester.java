@@ -52,12 +52,13 @@ public class WebDashboardTester {
 						.setPath("selectTest")
 						.setLarge(true)
 						.setEnabled(true)
-						.setWidth(6)
+						.setWidth(12)
 						.setOptions(new Select.Option[]{
 								new Select.Option("MEOW", "cat"),
 								new Select.Option("WOOF", "dog")
 						})
 						.createSelect(),
+				new Spacer(4),
 				new Checkboxes.Builder()
 						.setLabel("Test checkboxes")
 						.setPath("checkboxTest")
@@ -66,7 +67,15 @@ public class WebDashboardTester {
 								new Checkboxes.Checkbox("one", "Option one"),
 								new Checkboxes.Checkbox("two", "Option two")
 						})
-						.createCheckboxes()
+						.createCheckboxes(),
+				new Text.Builder()
+						.setLabel("Testing text")
+						.setPath("textTest")
+						.setWidth(2)
+						.setEditable(true)
+						.setNumbersOnly(true)
+						.setLarge(true)
+						.createText()
 		});
 		System.out.println("meow");
 	}
