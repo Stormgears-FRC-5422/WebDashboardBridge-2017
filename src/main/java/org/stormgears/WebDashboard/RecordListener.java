@@ -1,7 +1,5 @@
 package org.stormgears.WebDashboard;
 
-import com.google.gson.JsonElement;
-
 /**
  * Interface for record change listener classes.
  */

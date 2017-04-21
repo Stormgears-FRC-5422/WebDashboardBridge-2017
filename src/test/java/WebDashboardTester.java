@@ -1,5 +1,5 @@
-import com.google.gson.JsonElement;
 import org.stormgears.WebDashboard.GameControl.*;
+import org.stormgears.WebDashboard.JsonElement;
 import org.stormgears.WebDashboard.RecordListener;
 import org.stormgears.WebDashboard.WebDashboard;
 
@@ -10,12 +10,12 @@ public class WebDashboardTester {
 	public static void main(String[] args) throws Exception {
 		WebDashboard.init();
 //		System.out.println(WebDashboard.getDouble("motor"));
-//		WebDashboard.subscribeRecord("motor", new RecordListener() {
-//			@Override
-//			public void recordChanged(String path, JsonElement data) {
-//				System.out.println(data);
-//			}
-//		});
+		WebDashboard.subscribeRecord("motor", new RecordListener() {
+			@Override
+			public void recordChanged(String path, JsonElement data) {
+				System.out.println(data);
+			}
+		});
 
 
 		WebDashboard.set("config", "game", new GameControl[]{
