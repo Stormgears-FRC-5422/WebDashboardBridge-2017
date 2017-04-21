@@ -1,4 +1,6 @@
-group 'WebDashboard'
+import proguard.gradle.ProGuardTask
+
+group 'webdashboard'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
@@ -13,9 +15,11 @@ repositories {
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
+        classpath 'net.sf.proguard:proguard-gradle:5.3.3'
     }
 }
 
@@ -31,7 +35,16 @@ shadowJar {
     baseName = 'webdashboard'
     classifier = null
     version = null
-    relocate 'com.google', 'org.stormgears.webdashboard.internal.google'
-    relocate 'io.deepstream', 'org.stormgears.webdashboard.internal.deepstream'
-    relocate 'org.java_websocket', 'org.stormgears.webdashboard.internal.java-websocket'
+    relocate 'com.google', 'org.stormgears.webdashboard-shadow.google'
+    relocate 'io.deepstream', 'org.stormgears.webdashboard-shadow.deepstream'
+    relocate 'org.java_websocket', 'org.stormgears.webdashboard-shadow.java-websocket'
+}
+
+task proguard(type: ProGuardTask, dependsOn: 'shadowJar') {
+    configuration 'proguard.txt'
+
+    injars "$buildDir/libs/webdashboard.jar"
+    outjars "$buildDir/libs/webdashboard-dist.jar"
+
+//    libraryjars "${System.getProperty('java.home')}/lib/rt.jar"
 }
