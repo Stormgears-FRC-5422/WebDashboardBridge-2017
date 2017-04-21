@@ -75,7 +75,15 @@ public class WebDashboardTester {
 						.setEditable(true)
 						.setNumbersOnly(true)
 						.setLarge(true)
-						.createText()
+						.createText(),
+				new TextField.Builder()
+						.setLabel("Testing textfield")
+						.setPath("textFieldTest")
+						.setWidth(8)
+						.setFill(true)
+						.setNumbersOnly(true)
+						.createTextField(),
+				new TextArea.Builder().setLabel("Textarea Test").setWidth(4).setPath("textAreaTest").createTextArea()
 		});
 		System.out.println("meow");
 	}
