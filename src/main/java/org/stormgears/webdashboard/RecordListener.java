@@ -1,4 +1,4 @@
-package org.stormgears.WebDashboard;
+package org.stormgears.webdashboard;
 
 /**
  * Interface for record change listener classes.

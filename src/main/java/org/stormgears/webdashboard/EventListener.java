@@ -1,4 +1,4 @@
-package org.stormgears.WebDashboard;
+package org.stormgears.webdashboard;
 
 /**
  * Wrapper around a Deepstream event listener.

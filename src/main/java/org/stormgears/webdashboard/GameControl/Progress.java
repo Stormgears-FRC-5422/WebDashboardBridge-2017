@@ -1,4 +1,4 @@
-package org.stormgears.WebDashboard.GameControl;
+package org.stormgears.webdashboard.GameControl;
 
 /**
  * Creates a progress display in the dashboard. This represents a floating-point value from 0.0 to 1.0.

@@ -1,22 +1,9 @@
-package org.stormgears.WebDashboard.GameControl;
+package org.stormgears.webdashboard.GameControl;
 
 /**
- * Creates a dropdown menu on the dashboard.
+ * Creates a multi-line text area on the dashboard.
  */
-public class Select implements GameControl {
-	/**
-	 * Represents a single choice in the dropdown menu.
-	 */
-	public static class Option {
-		public final String label;
-		public final String value;
-
-		public Option(String label, String value) {
-			this.label = label;
-			this.value = value;
-		}
-	}
-
+public class TextArea implements GameControl {
 	/**
 	 * Text to be displayed near the control.
 	 */
@@ -45,29 +32,28 @@ public class Select implements GameControl {
 	public boolean enabled = true;
 
 	/**
-	 * A list of options to display
+	 * Whether the text box should be limited to numerical input.
 	 */
-	public final Option[] options;
+	public boolean fill = false;
 
-	public final ControlType type = ControlType.SELECT;
+	public final ControlType type = ControlType.TEXTAREA;
 
-	public Select(String label, String path, Option[] options) {
+	public TextArea(String label, String path) {
 		this.label = label;
 		this.path = path;
-		this.options = options;
 	}
 
-	public Select(String label, String path, int width, boolean large, boolean enabled, Option[] options) {
+	public TextArea(String label, String path, int width, boolean large, boolean enabled, boolean fill) {
 		this.label = label;
 		this.path = path;
 		this.width = width;
 		this.large = large;
 		this.enabled = enabled;
-		this.options = options;
+		this.fill = fill;
 	}
 
 	/**
-	 * Builder class to assist in the construction of a Select
+	 * Builder class to assist in the construction of a TextArea.
 	 */
 	public static class Builder {
 		private String label;
@@ -75,7 +61,7 @@ public class Select implements GameControl {
 		private int width = 12;
 		private boolean large = false;
 		private boolean enabled = true;
-		private Select.Option[] options;
+		private boolean fill = false;
 
 		public Builder setLabel(String label) {
 			this.label = label;
@@ -102,13 +88,13 @@ public class Select implements GameControl {
 			return this;
 		}
 
-		public Builder setOptions(Select.Option[] options) {
-			this.options = options;
+		public Builder setFill(boolean fill) {
+			this.fill = fill;
 			return this;
 		}
 
-		public Select createSelect() {
-			return new Select(label, path, width, large, enabled, options);
+		public TextArea createTextArea() {
+			return new TextArea(label, path, width, large, enabled, fill);
 		}
 	}
 }

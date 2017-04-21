@@ -1,9 +1,22 @@
-package org.stormgears.WebDashboard.GameControl;
+package org.stormgears.webdashboard.GameControl;
 
 /**
- * Creates a single-line text box on the dashboard.
+ * Creates a dropdown menu on the dashboard.
  */
-public class TextField implements GameControl {
+public class Select implements GameControl {
+	/**
+	 * Represents a single choice in the dropdown menu.
+	 */
+	public static class Option {
+		public final String label;
+		public final String value;
+
+		public Option(String label, String value) {
+			this.label = label;
+			this.value = value;
+		}
+	}
+
 	/**
 	 * Text to be displayed near the control.
 	 */
@@ -32,29 +45,29 @@ public class TextField implements GameControl {
 	public boolean enabled = true;
 
 	/**
-	 * Specifies whether the text field fills the entire width allowed.
+	 * A list of options to display
 	 */
-	public boolean fill = false;
+	public final Option[] options;
 
-	/**
-	 * Whether the text box should be limited to numerical input.
-	 */
-	public boolean numbersOnly = false;
+	public final ControlType type = ControlType.SELECT;
 
-	public final ControlType type = ControlType.TEXTFIELD;
+	public Select(String label, String path, Option[] options) {
+		this.label = label;
+		this.path = path;
+		this.options = options;
+	}
 
-	public TextField(String label, String path, int width, boolean large, boolean enabled, boolean fill, boolean numbersOnly) {
+	public Select(String label, String path, int width, boolean large, boolean enabled, Option[] options) {
 		this.label = label;
 		this.path = path;
 		this.width = width;
 		this.large = large;
 		this.enabled = enabled;
-		this.fill = fill;
-		this.numbersOnly = numbersOnly;
+		this.options = options;
 	}
 
 	/**
-	 * Builder class to assist in the construction of a TextField object
+	 * Builder class to assist in the construction of a Select
 	 */
 	public static class Builder {
 		private String label;
@@ -62,8 +75,7 @@ public class TextField implements GameControl {
 		private int width = 12;
 		private boolean large = false;
 		private boolean enabled = true;
-		private boolean fill = false;
-		private boolean numbersOnly = false;
+		private Select.Option[] options;
 
 		public Builder setLabel(String label) {
 			this.label = label;
@@ -90,18 +102,13 @@ public class TextField implements GameControl {
 			return this;
 		}
 
-		public Builder setFill(boolean fill) {
-			this.fill = fill;
+		public Builder setOptions(Select.Option[] options) {
+			this.options = options;
 			return this;
 		}
 
-		public Builder setNumbersOnly(boolean numbersOnly) {
-			this.numbersOnly = numbersOnly;
-			return this;
-		}
-
-		public TextField createTextField() {
-			return new TextField(label, path, width, large, enabled, fill, numbersOnly);
+		public Select createSelect() {
+			return new Select(label, path, width, large, enabled, options);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-package org.stormgears.WebDashboard.GameControl;
+package org.stormgears.webdashboard.GameControl;
 
 /**
  * Creates a slider control in the dashboard. Displays and controls a numerical value.

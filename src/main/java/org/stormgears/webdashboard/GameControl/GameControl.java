@@ -1,4 +1,4 @@
-package org.stormgears.WebDashboard.GameControl;
+package org.stormgears.webdashboard.GameControl;
 
 /**
  * Interface for game controls. An array of GameControls can be added to the dashboard using

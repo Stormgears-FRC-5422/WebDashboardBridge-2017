@@ -1,9 +1,9 @@
-package org.stormgears.WebDashboard.GameControl;
+package org.stormgears.webdashboard.GameControl;
 
 /**
- * Displays a piece of text on the dashboard. This text may or may not be editable.
+ * Creates a single-line text box on the dashboard.
  */
-public class Text implements GameControl {
+public class TextField implements GameControl {
 	/**
 	 * Text to be displayed near the control.
 	 */
@@ -29,38 +29,40 @@ public class Text implements GameControl {
 	/**
 	 * Specifies whether the user is allowed to make modifications to the control's value.
 	 */
-	public boolean editable = false;
+	public boolean enabled = true;
 
 	/**
-	 * Whether the text field should be restricted to number input.
+	 * Specifies whether the text field fills the entire width allowed.
+	 */
+	public boolean fill = false;
+
+	/**
+	 * Whether the text box should be limited to numerical input.
 	 */
 	public boolean numbersOnly = false;
 
-	public final ControlType type = ControlType.TEXT;
+	public final ControlType type = ControlType.TEXTFIELD;
 
-	public Text(String label, String path) {
-		this.label = label;
-		this.path = path;
-	}
-
-	public Text(String label, String path, int width, boolean large, boolean editable, boolean numbersOnly) {
+	public TextField(String label, String path, int width, boolean large, boolean enabled, boolean fill, boolean numbersOnly) {
 		this.label = label;
 		this.path = path;
 		this.width = width;
 		this.large = large;
-		this.editable = editable;
+		this.enabled = enabled;
+		this.fill = fill;
 		this.numbersOnly = numbersOnly;
 	}
 
 	/**
-	 * Builder class to assist in the construction of a Text object.
+	 * Builder class to assist in the construction of a TextField object
 	 */
 	public static class Builder {
 		private String label;
 		private String path;
 		private int width = 12;
 		private boolean large = false;
-		private boolean editable = false;
+		private boolean enabled = true;
+		private boolean fill = false;
 		private boolean numbersOnly = false;
 
 		public Builder setLabel(String label) {
@@ -83,8 +85,13 @@ public class Text implements GameControl {
 			return this;
 		}
 
-		public Builder setEditable(boolean editable) {
-			this.editable = editable;
+		public Builder setEnabled(boolean enabled) {
+			this.enabled = enabled;
+			return this;
+		}
+
+		public Builder setFill(boolean fill) {
+			this.fill = fill;
 			return this;
 		}
 
@@ -93,8 +100,8 @@ public class Text implements GameControl {
 			return this;
 		}
 
-		public Text createText() {
-			return new Text(label, path, width, large, editable, numbersOnly);
+		public TextField createTextField() {
+			return new TextField(label, path, width, large, enabled, fill, numbersOnly);
 		}
 	}
 }

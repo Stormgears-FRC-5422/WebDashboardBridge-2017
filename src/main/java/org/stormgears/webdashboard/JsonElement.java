@@ -1,15 +1,12 @@
-package org.stormgears.WebDashboard;
+package org.stormgears.webdashboard;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-import java.lang.ref.PhantomReference;
-import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.HashMap;
 
 /**
  * A class representing an element of Json. It could either be a {@link JsonObject}, a

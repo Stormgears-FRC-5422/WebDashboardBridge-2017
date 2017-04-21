@@ -1,4 +1,4 @@
-package org.stormgears.WebDashboard.GameControl;
+package org.stormgears.webdashboard.GameControl;
 
 /**
  * Enum to specify the color of a control

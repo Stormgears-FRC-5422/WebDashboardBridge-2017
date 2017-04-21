@@ -1,34 +1,42 @@
-package org.stormgears.WebDashboard.GameControl;
+package org.stormgears.webdashboard.GameControl;
 
 /**
- * Creates radio buttons on the dashboard.
+ * Creates a group of checkboxes on the dashboard. The checkboxes control a JSON object.
+ * <p>
+ * For example, if a Checkbox object is bound to the path "checkboxes" and contains the following Checkboxes:
+ * <blockquote><pre>
+ * {
+ *     new Checkbox("a", "Label A"),
+ *     new Checkbox("b", "Label B")
+ * }
+ * </pre></blockquote>
+ * the code
+ * <blockquote><pre>
+ * WebDashboard.set("checkboxes.a", false);
+ * WebDashboard.set("checkboxes.b", true);
+ * </pre></blockquote>
+ * will cause the first checkbox to be unchecked and the second checkbox to be checked. If the following code is run
+ * instead:
+ * <blockquote><pre>
+ * WebDashboard.set("checkboxes", true);
+ * </pre></blockquote>
+ * then <i>all</i> of the checkboxes will be checked. This is useful if there is only one checkbox.
  */
-public class Radios implements GameControl {
+public class Checkboxes implements GameControl {
 	/**
-	 * Represents a single radio button.
+	 * Represents a single checkbox on the dashboard.
 	 */
-	public static class Radio {
-		/**
-		 * The underlying value used by the software.
-		 */
+	public static class Checkbox {
 		public final String value;
-
-		/**
-		 * The label displayed next to the radio button.
-		 */
 		public final String label;
-
-		/**
-		 * Whether this single radio button is enabled.
-		 */
 		public boolean enabled = true;
 
-		public Radio(String value, String label) {
+		public Checkbox(String value, String label) {
 			this.value = value;
 			this.label = label;
 		}
 
-		public Radio(String value, String label, boolean enabled) {
+		public Checkbox(String value, String label, boolean enabled) {
 			this.value = value;
 			this.label = label;
 			this.enabled = enabled;
@@ -63,29 +71,29 @@ public class Radios implements GameControl {
 	public boolean enabled = true;
 
 	/**
-	 * A list of radio buttons to display as options.
+	 * A list of checkboxes to display.
 	 */
-	public final Radio[] entries;
+	public final Checkbox[] entries;
 
-	/**
-	 * Specifies the style of toggles.
-	 */
-	public ToggleType toggleType = ToggleType.DEFAULT;
+	public final ControlType type = ControlType.CHECKBOXES;
 
-	public final ControlType type = ControlType.RADIOS;
+	public Checkboxes(String label, String path, Checkbox[] entries) {
+		this.label = label;
+		this.path = path;
+		this.entries = entries;
+	}
 
-	public Radios(String label, String path, int width, boolean large, boolean enabled, Radio[] entries, ToggleType toggleType) {
+	public Checkboxes(String label, String path, int width, boolean large, boolean enabled, Checkbox[] entries) {
 		this.label = label;
 		this.path = path;
 		this.width = width;
 		this.large = large;
 		this.enabled = enabled;
 		this.entries = entries;
-		this.toggleType = toggleType;
 	}
 
 	/**
-	 * Builder class to assist in the construction of a Radios object
+	 * Builder class to assist the construction of a Progress object
 	 */
 	public static class Builder {
 		private String label;
@@ -93,8 +101,7 @@ public class Radios implements GameControl {
 		private int width = 12;
 		private boolean large = false;
 		private boolean enabled = true;
-		private Radios.Radio[] entries;
-		private ToggleType toggleType = ToggleType.DEFAULT;
+		private Checkboxes.Checkbox[] entries;
 
 		public Builder setLabel(String label) {
 			this.label = label;
@@ -121,18 +128,13 @@ public class Radios implements GameControl {
 			return this;
 		}
 
-		public Builder setEntries(Radios.Radio[] entries) {
+		public Builder setEntries(Checkboxes.Checkbox[] entries) {
 			this.entries = entries;
 			return this;
 		}
 
-		public Builder setToggleType(ToggleType toggleType) {
-			this.toggleType = toggleType;
-			return this;
-		}
-
-		public Radios createRadios() {
-			return new Radios(label, path, width, large, enabled, entries, toggleType);
+		public Checkboxes createCheckboxes() {
+			return new Checkboxes(label, path, width, large, enabled, entries);
 		}
 	}
 }

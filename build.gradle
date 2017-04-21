@@ -10,15 +10,28 @@ repositories {
     jcenter()
 }
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
+    }
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile 'io.deepstream:deepstream.io-client-java:2.0.4'
 }
 
 
-task fatJar(type: Jar) {
-    baseName = project.name + '-all'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    from sourceSets.main.allSource
-    with jar
+shadowJar {
+    baseName = 'webdashboard'
+    classifier = null
+    version = null
+    relocate 'com.google', 'org.stormgears.webdashboard.internal.google'
+    relocate 'io.deepstream', 'org.stormgears.webdashboard.internal.deepstream'
+    relocate 'org.java_websocket', 'org.stormgears.webdashboard.internal.java-websocket'
 }

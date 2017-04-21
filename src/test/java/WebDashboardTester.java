@@ -1,7 +1,7 @@
-import org.stormgears.WebDashboard.GameControl.*;
-import org.stormgears.WebDashboard.JsonElement;
-import org.stormgears.WebDashboard.RecordListener;
-import org.stormgears.WebDashboard.WebDashboard;
+import org.stormgears.webdashboard.GameControl.*;
+import org.stormgears.webdashboard.JsonElement;
+import org.stormgears.webdashboard.RecordListener;
+import org.stormgears.webdashboard.WebDashboard;
 
 /**
  * Created by andrew on 12/29/16.

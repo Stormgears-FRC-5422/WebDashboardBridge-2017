@@ -1,4 +1,4 @@
-package org.stormgears.WebDashboard.GameControl;
+package org.stormgears.webdashboard.GameControl;
 
 /**
  * Enum for each type of control.

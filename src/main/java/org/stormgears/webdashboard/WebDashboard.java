@@ -1,4 +1,4 @@
-package org.stormgears.WebDashboard;
+package org.stormgears.webdashboard;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -217,7 +217,7 @@ public class WebDashboard {
 		rec.subscribe(path, new RecordPathChangedCallback() {
 			@Override
 			public void onRecordPathChanged(String s, String path, JsonElement jsonElement) {
-				recordListener.recordChanged(path, new org.stormgears.WebDashboard.JsonElement(jsonElement));
+				recordListener.recordChanged(path, new org.stormgears.webdashboard.JsonElement(jsonElement));
 			}
 		});
 	}
@@ -232,7 +232,7 @@ public class WebDashboard {
 		client.record.getRecord("webdashboard/" + record).subscribe(path, new RecordPathChangedCallback() {
 			@Override
 			public void onRecordPathChanged(String s, String path, JsonElement jsonElement) {
-				recordListener.recordChanged(path, new org.stormgears.WebDashboard.JsonElement(jsonElement));
+				recordListener.recordChanged(path, new org.stormgears.webdashboard.JsonElement(jsonElement));
 			}
 		});
 	}
@@ -246,7 +246,7 @@ public class WebDashboard {
 		rec.subscribe(new RecordChangedCallback() {
 			@Override
 			public void onRecordChanged(String s, JsonElement jsonElement) {
-				recordListener.recordChanged("", new org.stormgears.WebDashboard.JsonElement(jsonElement));
+				recordListener.recordChanged("", new org.stormgears.webdashboard.JsonElement(jsonElement));
 			}
 		});
 	}

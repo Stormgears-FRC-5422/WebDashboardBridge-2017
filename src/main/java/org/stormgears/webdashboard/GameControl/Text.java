@@ -1,9 +1,9 @@
-package org.stormgears.WebDashboard.GameControl;
+package org.stormgears.webdashboard.GameControl;
 
 /**
- * Creates a multi-line text area on the dashboard.
+ * Displays a piece of text on the dashboard. This text may or may not be editable.
  */
-public class TextArea implements GameControl {
+public class Text implements GameControl {
 	/**
 	 * Text to be displayed near the control.
 	 */
@@ -29,39 +29,39 @@ public class TextArea implements GameControl {
 	/**
 	 * Specifies whether the user is allowed to make modifications to the control's value.
 	 */
-	public boolean enabled = true;
+	public boolean editable = false;
 
 	/**
-	 * Whether the text box should be limited to numerical input.
+	 * Whether the text field should be restricted to number input.
 	 */
-	public boolean fill = false;
+	public boolean numbersOnly = false;
 
-	public final ControlType type = ControlType.TEXTAREA;
+	public final ControlType type = ControlType.TEXT;
 
-	public TextArea(String label, String path) {
+	public Text(String label, String path) {
 		this.label = label;
 		this.path = path;
 	}
 
-	public TextArea(String label, String path, int width, boolean large, boolean enabled, boolean fill) {
+	public Text(String label, String path, int width, boolean large, boolean editable, boolean numbersOnly) {
 		this.label = label;
 		this.path = path;
 		this.width = width;
 		this.large = large;
-		this.enabled = enabled;
-		this.fill = fill;
+		this.editable = editable;
+		this.numbersOnly = numbersOnly;
 	}
 
 	/**
-	 * Builder class to assist in the construction of a TextArea.
+	 * Builder class to assist in the construction of a Text object.
 	 */
 	public static class Builder {
 		private String label;
 		private String path;
 		private int width = 12;
 		private boolean large = false;
-		private boolean enabled = true;
-		private boolean fill = false;
+		private boolean editable = false;
+		private boolean numbersOnly = false;
 
 		public Builder setLabel(String label) {
 			this.label = label;
@@ -83,18 +83,18 @@ public class TextArea implements GameControl {
 			return this;
 		}
 
-		public Builder setEnabled(boolean enabled) {
-			this.enabled = enabled;
+		public Builder setEditable(boolean editable) {
+			this.editable = editable;
 			return this;
 		}
 
-		public Builder setFill(boolean fill) {
-			this.fill = fill;
+		public Builder setNumbersOnly(boolean numbersOnly) {
+			this.numbersOnly = numbersOnly;
 			return this;
 		}
 
-		public TextArea createTextArea() {
-			return new TextArea(label, path, width, large, enabled, fill);
+		public Text createText() {
+			return new Text(label, path, width, large, editable, numbersOnly);
 		}
 	}
 }
