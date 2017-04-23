@@ -24,7 +24,7 @@ public class WebDashboard {
 	 * Initializes the WebDashboard class, connecting to the specified server
 	 * @throws URISyntaxException If the given server URI is invalid
 	 */
-	public static void init() throws URISyntaxException, IOException {
+	public static void init() throws IOException {
 		// Discover the server
 		DatagramSocket datagram = new DatagramSocket(null);
 		datagram.setSoTimeout(10000);
@@ -56,7 +56,11 @@ public class WebDashboard {
 			}
 		}
 
-		client = new DeepstreamClient(server);
+		try {
+			client = new DeepstreamClient(server);
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
 
 		JsonObject loginData = new JsonObject();
 		loginData.addProperty("username", "robot");
@@ -68,6 +72,8 @@ public class WebDashboard {
 		} else {
 			throw new Error("Oh noes!"); // TODO: properly handle?
 		}
+
+		REPL.init();
 	}
 
 	// Getting records in a quasi-typesafe manner

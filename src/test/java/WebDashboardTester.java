@@ -8,6 +8,8 @@ import org.stormgears.webdashboard.WebDashboard;
  */
 public class WebDashboardTester {
 	public static void main(String[] args) throws Exception {
+//		System.in.read();
+
 		WebDashboard.init();
 //		System.out.println(WebDashboard.getDouble("motor"));
 		WebDashboard.subscribeRecord("motor", new RecordListener() {

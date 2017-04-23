@@ -1,16 +1,45 @@
--libraryjars /Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/jre/lib/rt.jar
+-libraryjars /Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/jre/lib/
+#-libraryjars /Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/jre/lib/ext/nashorn.jar
 
 -keepparameternames
 -optimizationpasses 5
+-printmapping mapping.txt
 -allowaccessmodification
 -mergeinterfacesaggressively
 -overloadaggressively
 -dontusemixedcaseclassnames
 -keeppackagenames org.stormgears.webdashboard
--flattenpackagehierarchy org.stormgears.webdashboard-shadow
--repackageclasses org.stormgears.webdashboard-shadow
+-flattenpackagehierarchy org.stormgears.webdashboard-lib
+-repackageclasses org.stormgears.webdashboard-lib
 -keepattributes Signature,*Annotation*,InnerClasses
 -verbose
+
+# Stuff for Guava
+-dontwarn com.google.common.collect.MinMaxPriorityQueue
+-dontwarn com.google.errorprone.annotations.CanIgnoreReturnValue
+-dontwarn com.google.errorprone.annotations.concurrent.LazyInit
+-dontwarn com.google.errorprone.annotations.ForOverride
+-dontwarn java.lang.ClassValue
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-dontwarn javax.annotation.**
+-dontwarn javax.inject.**
+-dontwarn sun.misc.Unsafe
+-dontwarn com.google.j2objc.annotations.**
+
+-keepclassmembernames class ** {
+  ** getJavaLangAccess(...);
+  ** finalizeReferent(...);
+  ** currentRequestThreadFactory(...);
+  ** getCurrentEnvironment(...);
+  ** allocateInstance(java.lang.Class);
+  ** base;
+  ** busy;
+  ** value;
+  ** waiters;
+  ** listeners;
+  ** theUnsafe;
+
+}
 
 -keep class org.stormgears.webdashboard.** {
     public protected *;
@@ -26,11 +55,14 @@
     <methods>;
 }
 
--keep class * extends org.stormgears.webdashboard-shadow.google.gson.TypeAdapterFactory
+-keep class * extends org.stormgears.webdashboard-lib.google.gson.TypeAdapterFactory
+#-keep class * extends com.google.gson.TypeAdapterFactory
 
--keep class * extends org.stormgears.webdashboard-shadow.google.gson.JsonSerializer
+-keep class * extends org.stormgears.webdashboard-lib.google.gson.JsonSerializer
+#-keep class * extends com.google.gson.JsonSerializer
 
--keep class * extends org.stormgears.webdashboard-shadow.google.gson.JsonDeserializer
+-keep class * extends org.stormgears.webdashboard-lib.google.gson.JsonDeserializer
+#-keep class * extends com.google.gson.JsonDeserializer
 
 # Also keep - Enumerations. Keep the special static methods that are required in
 # enumeration classes.

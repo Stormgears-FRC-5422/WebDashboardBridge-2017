@@ -5,7 +5,7 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 
-sourceCompatibility = 1.7
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -28,6 +28,9 @@ apply plugin: 'com.github.johnrengelman.shadow'
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile 'io.deepstream:deepstream.io-client-java:2.0.4'
+    compile 'com.google.guava:guava:21.0'
+//    compile 'com.google.code.findbugs:jsr305:3.0.2'
+    compile 'com.google.errorprone:error_prone_annotations:2.0.15'
 }
 
 
@@ -35,9 +38,10 @@ shadowJar {
     baseName = 'webdashboard'
     classifier = null
     version = null
-    relocate 'com.google', 'org.stormgears.webdashboard-shadow.google'
-    relocate 'io.deepstream', 'org.stormgears.webdashboard-shadow.deepstream'
-    relocate 'org.java_websocket', 'org.stormgears.webdashboard-shadow.java-websocket'
+    relocate 'com.google.gson', 'org.stormgears.webdashboard-lib.google.gson'
+//    relocate 'com.google.guava', 'org.stormgears.webdashboard-shadow.google.guava'
+//    relocate 'io.deepstream', 'org.stormgears.webdashboard-shadow.deepstream'
+//    relocate 'org.java_websocket', 'org.stormgears.webdashboard-shadow.java-websocket'
 }
 
 task proguard(type: ProGuardTask, dependsOn: 'shadowJar') {
