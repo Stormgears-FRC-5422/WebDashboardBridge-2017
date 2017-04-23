@@ -44,6 +44,11 @@ public class REPL {
 				try {
 					Object evaled = engine.eval(code);
 
+					if (evaled == null) {
+						rpcResponse.send(null);
+						return;
+					}
+
 					MoreObjects.ToStringHelper toStringHelper = MoreObjects.toStringHelper(evaled);
 
 					try {
