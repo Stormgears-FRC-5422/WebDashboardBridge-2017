@@ -1,5 +1,6 @@
 package org.stormgears.webdashboard;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
 import io.deepstream.RpcRequestedListener;
@@ -13,6 +14,7 @@ import javax.script.ScriptException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.*;
 
 /**
@@ -40,7 +42,21 @@ public class REPL {
 			public void onRPCRequested(String s, Object o, RpcResponse rpcResponse) {
 				String code = o.toString();
 				try {
-					rpcResponse.send(engine.eval(code));
+					Object evaled = engine.eval(code);
+
+					MoreObjects.ToStringHelper toStringHelper = MoreObjects.toStringHelper(evaled);
+
+					try {
+						for (Field f : evaled.getClass().getFields()) {
+							toStringHelper.add(f.getName(), f.get(evaled));
+						}
+
+						toStringHelper.add("toString()", evaled.toString());
+					} catch (Exception ignored) {
+
+					}
+
+					rpcResponse.send(toStringHelper.toString());
 				} catch (Throwable e) {
 					rpcResponse.send("Exception occurred.");
 					e.printStackTrace();
@@ -82,14 +98,22 @@ public class REPL {
 							Class<?> representedClass = staticClass.getRepresentedClass();
 
 							for (Method m : representedClass.getMethods()) {
-								response.add(m.getName());
+								if (Modifier.isStatic(m.getModifiers())) {
+									response.add(m.getName());
+								}
 							}
 							for (Field f : representedClass.getFields()) {
-								response.add(f.getName());
+								if (Modifier.isStatic(f.getModifiers())) {
+									response.add(f.getName());
+								}
 							}
 							for (Class c : representedClass.getClasses()) {
-								response.add(c.getName());
+								if (Modifier.isStatic(c.getModifiers())) {
+									response.add(c.getName());
+								}
 							}
+						} else if (eval instanceof Package) {
+
 						} else {
 //							Class<?> representedClass = eval.getClass();
 //
@@ -158,8 +182,37 @@ public class REPL {
 		engine = engineFactory.getScriptEngine();
 	}
 
-	public static void addImport(String packageName) {
-		// TODO
+	public static void addImport(String packageName) throws ClassNotFoundException, ScriptException {
+		String[] path = packageName.trim().split("\\.");
+
+		ClassTree curr = classTree;
+		for (String p : path) {
+//			if (curr != null && curr.tree.containsKey(p)) {
+				curr = curr.tree.get(p);
+//			} else {
+//				curr = null;
+//				break;
+//			}
+		}
+
+		if (curr == null) {
+			// this is a class
+			engine.eval("this." + path[path.length - 1] + " = Java.type(" + packageName + ")");
+//			engine.put(path[path.length - 1], Class.forName(packageName));
+		} else {
+			for (String c : curr.tree.keySet()) {
+//				try {
+//					engine.eval("this." + c + " = Java.type(" + packageName + "." + c + ")");
+//				} catch (ScriptException e) {
+					engine.eval("this." + c + " = " + packageName + "." + c);
+//				}
+//				try {
+//					engine.put(c, ScriptUtils.wrap(Class.forName(packageName + "." + c)));
+//				} catch (ClassNotFoundException e) {
+//					engine.put(c, ScriptUtils.wrap(Package.getPackage(packageName + "." + c)));
+//				}
+			}
+		}
 	}
 
 
